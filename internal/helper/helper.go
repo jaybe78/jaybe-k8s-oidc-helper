@@ -43,6 +43,7 @@ func ReadConfig(path string) (*GoogleConfig, error) {
 
 // Get the id_token and refresh_token from google
 func GetToken(clientID, clientSecret, code string) (*TokenResponse, error) {
+    fmt.Println("GetToken")
 	val := url.Values{}
 	val.Add("grant_type", "authorization_code")
 	val.Add("redirect_uri", "urn:ietf:wg:oauth:2.0:oob")
@@ -111,6 +112,7 @@ func GetUserEmail(accessToken string) (string, error) {
 }
 
 func GenerateAuthInfo(clientId, clientSecret, idToken, refreshToken string) *clientcmdapi.AuthInfo {
+    fmt.Println("GenerateAuthInfo")
 	return &clientcmdapi.AuthInfo{
 		AuthProvider: &clientcmdapi.AuthProviderConfig{
 			Name: "oidc",
@@ -126,6 +128,7 @@ func GenerateAuthInfo(clientId, clientSecret, idToken, refreshToken string) *cli
 }
 
 func createOpenCmd(oauthUrl, clientID string) (*exec.Cmd, error) {
+    fmt.Println("createOpenCmd")
 	url := fmt.Sprintf(oauthUrl, clientID)
 
 	switch os := runtime.GOOS; os {
@@ -140,7 +143,7 @@ func createOpenCmd(oauthUrl, clientID string) (*exec.Cmd, error) {
 
 func LaunchBrowser(openBrowser bool, oauthUrl, clientID string) {
 	openInstructions := fmt.Sprintf("Open this url in your browser: %s\n", fmt.Sprintf(oauthUrl, clientID))
-
+    fmt.Println("LaunchBrowser")
 	if !openBrowser {
 		fmt.Print(openInstructions)
 		return

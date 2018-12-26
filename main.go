@@ -20,8 +20,7 @@ import (
 )
 
 const Version = "v0.1.0"
-
-const oauthUrl = "https://accounts.google.com/o/oauth2/auth?redirect_uri=http://localhost&response_type=code&client_id=%s&scope=openid+email+profile&approval_prompt=force&access_type=offline"
+const oauthUrl = "https://accounts.google.com/o/oauth2/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=code&client_id=%s&scope=openid+email+profile&approval_prompt=force&access_type=offline"
 func main() {
 	flag.BoolP("version", "v", false, "Print version and exit")
 	flag.BoolP("open", "o", true, "Open the oauth approval URL in the browser")
@@ -62,9 +61,9 @@ func main() {
 		clientID = viper.GetString("client-id")
 		clientSecret = viper.GetString("client-secret")
 	}
-
+    fmt.Println("test")
 	helper.LaunchBrowser(viper.GetBool("open"), oauthUrl, clientID)
-
+    fmt.Println("after")
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Enter the code Google gave you: ")
 	code, _ := reader.ReadString('\n')
